@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -171,7 +132,7 @@
                 <span class="text-cream-100">to</span>
                 <span class="text-orange-300">Zen!</span>
             </h2>
-            <p class="text-xl mb-8 text-cream-100">Mastering the Wilderzone of TRIBES 3: Rivals with calm precision and strategic serenity.</p>
+            <p class="text-xl mb-8 text-orange-100">Mastering the Wilderzone of TRIBES 3: Rivals with calm precision and strategic serenity.</p>
             <a href="https://store.steampowered.com/app/2687970/TRIBES_3_Rivals/" target="_blank" class="bg-orange-600 hover:bg-orange-500 text-cream-100 font-bold py-3 px-6 rounded-lg border-2 border-orange-300 hover-scale">Play TRIBES 3: Rivals</a>
         </div>
     </section>
@@ -266,8 +227,8 @@
                 <span class="text-cream-100">About</span>
                 <span class="text-orange-300">Zen!</span>
             </h2>
-            <p class="text-lg mb-4 text-cream-100">Zen [ℨ] is a disciplined competitive team in *TRIBES 3: Rivals*, mastering the Wilderzone with calm precision and strategic serenity. Led by Captain Gigz, the team flows like water, striking with lethal grace.</p>
-            <p class="text-lg text-cream-100">Join us on Twitch to witness our tranquil dominance!</p>
+            <p class="text-lg mb-4 text-orange-100">Zen [ℨ] is a disciplined competitive team in *TRIBES 3: Rivals*, mastering the Wilderzone with calm precision and strategic serenity. Led by Captain Gigz, the team flows like water, striking with lethal grace.</p>
+            <p class="text-lg text-orange-100">Join us on Twitch to witness our tranquil dominance!</p>
         </div>
     </section>
 
